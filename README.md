@@ -3,6 +3,12 @@
 
 #  Bash Library
 
+>> Let's be honest; bash for developers is not that straightforward. And that's exactly why I made the bash library.
+
+>>How many of you wish you can use console.log inside a terminal instead of echo Hello world? If you are one, you should check this out.
+
+[![asciicast](https://asciinema.org/a/xsWFcHG0hrFnKAvhrubClsq6n.svg)](https://asciinema.org/a/xsWFcHG0hrFnKAvhrubClsq6n)
+
 ![build]()
 
 A  Core library for bash Bourne
