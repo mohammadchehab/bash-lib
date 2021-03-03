@@ -1,0 +1,4 @@
+--require spec_helper
+    --kcov-options "--exclude-pattern=/.shellspec,/spec/,/coverage/,/report/,/.tests/"
+    --kcov-options "--include-path=/core/ --path-strip-level=1"
+    --kcov-options "--include-pattern=/tests/"

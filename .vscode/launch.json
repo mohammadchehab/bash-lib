@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "configurations": [
+    {
+      "type": "bashdb",
+      "request": "launch",
+      "name": "Program",
+      "program": "${file}",
+      "env": {
+        "BASH__PATH": "${workspaceFolder}",
+        "BASH__DEBUG": true,
+        "ENTRY__POINT": "${file}"
+      }
+    }
+  ]
+}
