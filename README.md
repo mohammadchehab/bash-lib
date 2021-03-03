@@ -29,6 +29,9 @@ Once the module is loaded into the terminal you can start using the `methods`
 
 ```bash
 console.log Hello world!
+
+#output
+03/03/2021 11:25:33 - Mohammads-MacBook-Pro.local - bash - [LOG]: Hello world!
 ```
 
 another example in one shot
@@ -50,20 +53,6 @@ You can query the available modules using
 
 ```bash
 engine.modules
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [LOG]: compressions
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [WARN]: No Help Provided for the module compressions
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [LOG]: date
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [WARN]: No Help Provided for the module date
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [LOG]: directory
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [WARN]: No Help Provided for the module directory
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [LOG]: http
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [WARN]: No Help Provided for the module http
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [LOG]: kernel
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [WARN]: No Help Provided for the module kernel
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [LOG]: math
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [WARN]: No Help Provided for the module math
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [LOG]: utils
-03/03/2021 11:15:14 - Mohammads-MacBook-Pro.local - bash - [WARN]: No Help Provided for the module utils
 ```
 
 
@@ -99,10 +88,13 @@ Once done you can simply switch it off using the following command.
 set +x
 ```
 
-Check the `` environment variables that are loaded
+Check the `BASH` environment variables that are loaded
 
 ```bash
 env | sed "s/=.*//" | grep BASH
+# example output
+BASH__PATH
+BASH__VERBOSE
 ```
 
 ## Unit Testing
