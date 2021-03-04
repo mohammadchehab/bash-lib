@@ -47,7 +47,7 @@ import http && \
 http.get http://stash.compciv.org/congress-twitter/json/joni-ernst.json
 ```
 
-You can simple de-register the module using the `unset` command
+You can simply de-register the module using the `unset` command
 
 ```bash
 unset console;
@@ -82,7 +82,7 @@ engine.modules
 
 ## Debugging
 
-At the end of the day this is pure `bash`. To turn on debugging simple use
+At the end of the day this is pure `bash`. To turn on debugging simply use
 
 ```bash
 set -x
