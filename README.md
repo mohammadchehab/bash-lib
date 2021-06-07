@@ -108,5 +108,13 @@ BASH__VERBOSE
 `Lib Bash` uses [shellspec](https://github.com/shellspec/shellspec) to perform unit tests.
 all the test cases are stored under the `spec` directory. to run the tests simply use `make`
 
+## Contribute
+
+Don't know where to start yet?
+
+```bash
+egrep -Rin "TODO|FIXME" -R *
+```
+
 ## Change log
 see here for the complete [chanelog](CHANGELOG.md)
