@@ -8,6 +8,18 @@ import "colors" "inc"
 __CONSOLE__TIME__FORMAT="+%d/%m/%Y %H:%M:%S"
 __CONSOLE__TEMPLATE="#{color}#{log_date} - #{host_name} - #{script} - [#{log_type}]:#{color_off}"
 
+# Determine the shell type and current script file
+if [[ -n "$ZSH_VERSION" ]]; then
+  SHELL_NAME="zsh"
+  CURRENT_SCRIPT=${(%):-%N}
+elif [[ -n "$BASH_VERSION" ]]; then
+  SHELL_NAME="bash"
+  CURRENT_SCRIPT=$(basename "$0")
+else
+  SHELL_NAME="unknown"
+  CURRENT_SCRIPT="unknown"
+fi
+
 function console.help() {
    cat <<EOF
 -console.log
@@ -30,27 +42,18 @@ function console.help() {
 EOF
 }
 
-##
-## Private function which processes the message and throws it out
-## to the stdout with some text formatting
-##
-function console.__processLog() {
-
+console.__processLog() {
    local verbose=$(echo ${BASH__VERBOSE:-trace} | tr '[:upper:]' '[:lower:]')
-   # //todo:parameter substitution ${,,}  is not working with makefile on mac
    local requested_log_type=$(echo ${1} | tr '[:upper:]' '[:lower:]')
    local log=false
 
    case ${requested_log_type} in
    trace | debug | error | info)
       [[ ${verbose} == ${requested_log_type} ]] && log=true || log=false
-
       if [[ ${verbose} == "trace" ]]; then
          log=true
       fi
-
       ;;
-
    log | fatal | warn | error)
       log=true
       ;;
@@ -65,91 +68,123 @@ function console.__processLog() {
    local line_no=$4
    local log_date=$(date "${__CONSOLE__TIME__FORMAT}")
    local host_name=$(hostname)
-   local script=$0
+   local script=$CURRENT_SCRIPT
    local log_type=$1
    local color=$2
    local color_off=${Color_Off}
-   local template="$(echo ${__CONSOLE__TEMPLATE} | sed -e 's,#,$,g')"
+   local template="${color}${log_date} - ${host_name} - ${script} - [${log_type}]:${color_off}"
 
-   ## redirect the log to the
-   ## strerr as it's affecting the
-   ## return value for functions and affects piping
-   echo -e $(eval echo "${template}") ${message} 1>&3
+   echo -e "${template} ${message}" 1>&3
 }
 
-##
-## Allows you to throw generic messages to the stdout
-## With a [LOG] label which can be used to do log filter
-##
-function console.log() {
+console.log() {
    local message="$@"
-   local line_no=$BASH_LINENO
-   local source_file=$(caller | awk '{print $2}' | xargs basename)
-   console.__processLog "LOG" "${Color_Off}" "${line_no}" "${source_file}" "${message}"
+   local line_no=$LINENO
+   local source_file
+
+   if [[ "$SHELL_NAME" == "bash" ]]; then
+      source_file=$(caller 0 | awk '{print $2}' | xargs basename)
+   elif [[ "$SHELL_NAME" == "zsh" ]]; then
+      source_file=${(%):-%N}
+   else
+      source_file="unknown"
+   fi
+
+   console.__processLog "LOG" "${Color_Off}" "${source_file}" "${line_no}" "${message}"
 }
 
-##
-## Allows you to throw generic messages to the stdout
-## With a [FATAL] label which can be used to do log filter
-##
-function console.fatal() {
+console.fatal() {
    local message="$@"
-   local line_no=$BASH_LINENO
-   local source_file=$(caller | awk '{print $2}' | xargs basename)
-   console.__processLog "FATAL" "${BRed}" "${line_no}" "${source_file}" "${message}"
+   local line_no=$LINENO
+   local source_file
+
+   if [[ "$SHELL_NAME" == "bash" ]]; then
+      source_file=$(caller 0 | awk '{print $2}' | xargs basename)
+   elif [[ "$SHELL_NAME" == "zsh" ]]; then
+      source_file=${(%):-%N}
+   else
+      source_file="unknown"
+   fi
+
+   console.__processLog "FATAL" "${BRed}" "${source_file}" "${line_no}" "${message}"
 }
 
-##
-## Allows you to throw generic messages to the stdout
-## With a [ERROR] label which can be used to do log filter
-##
-function console.error() {
+console.error() {
    local message="$@"
-   local line_no=$BASH_LINENO
-   local source_file=$(caller | awk '{print $2}' | xargs basename)
-   console.__processLog "ERROR" "${BRed}" "${line_no}" "${source_file}" "${message}"
+   local line_no=$LINENO
+   local source_file
+
+   if [[ "$SHELL_NAME" == "bash" ]]; then
+      source_file=$(caller 0 | awk '{print $2}' | xargs basename)
+   elif [[ "$SHELL_NAME" == "zsh" ]]; then
+      source_file=${(%):-%N}
+   else
+      source_file="unknown"
+   fi
+
+   console.__processLog "ERROR" "${BRed}" "${source_file}" "${line_no}" "${message}"
 }
 
-##
-## Allows you to throw generic messages to the stdout
-## With a [TRACE] label which can be used to do log filter
-##
-function console.trace() {
+console.trace() {
    local message="$@"
-   local line_no=$BASH_LINENO
-   local source_file=$(caller | awk '{print $2}' | xargs basename)
-   console.__processLog "TRACE" "${BYellow}" "${line_no}" "${source_file}" "${message}"
+   local line_no=$LINENO
+   local source_file
+
+   if [[ "$SHELL_NAME" == "bash" ]]; then
+      source_file=$(caller 0 | awk '{print $2}' | xargs basename)
+   elif [[ "$SHELL_NAME" == "zsh" ]]; then
+      source_file=${(%):-%N}
+   else
+      source_file="unknown"
+   fi
+
+   console.__processLog "TRACE" "${BYellow}" "${source_file}" "${line_no}" "${message}"
 }
 
-##
-## Allows you to throw generic messages to the stdout
-## With a [TRACE] label which can be used to do log filter
-##
-function console.warn() {
+console.warn() {
    local message="$@"
-   local line_no=$BASH_LINENO
-   local source_file=$(caller | awk '{print $2}' | xargs basename)
-   console.__processLog "WARN" "${BYellow}" "${line_no}" "${source_file}" "${message}"
+   local line_no=$LINENO
+   local source_file
+
+   if [[ "$SHELL_NAME" == "bash" ]]; then
+      source_file=$(caller 0 | awk '{print $2}' | xargs basename)
+   elif [[ "$SHELL_NAME" == "zsh" ]]; then
+      source_file=${(%):-%N}
+   else
+      source_file="unknown"
+   fi
+
+   console.__processLog "WARN" "${BYellow}" "${source_file}" "${line_no}" "${message}"
 }
 
-##
-## Allows you to throw generic messages to the stdout
-## With a [DEBUG] label which can be used to do log filter
-##
-function console.debug() {
+console.debug() {
    local message="$@"
-   local line_no=$BASH_LINENO
-   local source_file=$(caller | awk '{print $2}' | xargs basename)
-   console.__processLog "DEBUG" "${BCyan}" "${line_no}" "${source_file}" "${message}"
+   local line_no=$LINENO
+   local source_file
+
+   if [[ "$SHELL_NAME" == "bash" ]]; then
+      source_file=$(caller 0 | awk '{print $2}' | xargs basename)
+   elif [[ "$SHELL_NAME" == "zsh" ]]; then
+      source_file=${(%):-%N}
+   else
+      source_file="unknown"
+   fi
+
+   console.__processLog "DEBUG" "${BCyan}" "${source_file}" "${line_no}" "${message}"
 }
 
-##
-## Allows you to throw generic messages to the stdout
-## With a [INFO] label which can be used to do log filter
-##
-function console.info() {
+console.info() {
    local message="$@"
-   local line_no=$BASH_LINENO
-   local source_file=$(caller | awk '{print $2}' | xargs basename)
-   console.__processLog "INFO" "${Color_Off}" "${line_no}" "${source_file}" "${message}"
+   local line_no=$LINENO
+   local source_file
+
+   if [[ "$SHELL_NAME" == "bash" ]]; then
+      source_file=$(caller 0 | awk '{print $2}' | xargs basename)
+   elif [[ "$SHELL_NAME" == "zsh" ]]; then
+      source_file=${(%):-%N}
+   else
+      source_file="unknown"
+   fi
+
+   console.__processLog "INFO" "${Color_Off}" "${source_file}" "${line_no}" "${message}"
 }

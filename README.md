@@ -9,7 +9,7 @@
 
 [![asciicast](https://asciinema.org/a/xsWFcHG0hrFnKAvhrubClsq6n.svg)](https://asciinema.org/a/xsWFcHG0hrFnKAvhrubClsq6n)
 
-![build]()
+
 
 A  Core library for bash Bourne
 
@@ -18,9 +18,11 @@ A  Core library for bash Bourne
 ```bash
 git clone https://github.com/mohammadchehab/bash-lib && \
 cd bash-lib && \ 
-export BASH__PATH=~/develop/lib-bash && \
+export BASH__PATH=~/develop/bash-lib && \
 source ${BASH__PATH}/core/init.sh
 ```
+
+
 
 ## Importing a Module
 
