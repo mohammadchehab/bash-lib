@@ -19,6 +19,7 @@ To quickly set up the `bash-lib` library, run the following command:
 
 ```bash
 sudo mkdir -p /opt/bash-lib && sudo curl -sSL https://raw.githubusercontent.com/mohammadchehab/bash-lib/main/core/init.sh -o /opt/bash-lib/init.sh && export BASH__PATH=/opt/bash-lib && source ${BASH__PATH}/init.sh
+```
 
 
 
