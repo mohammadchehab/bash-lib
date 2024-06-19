@@ -16,7 +16,7 @@ A  Core library for bash Bourne
 ## Setup
 
 ```bash
-git clone https://github.com/chehabz/bash-lib && \
+git clone https://github.com/mohammadchehab/bash-lib && \
 cd bash-lib && \ 
 export BASH__PATH=~/develop/lib-bash && \
 source ${BASH__PATH}/core/init.sh
