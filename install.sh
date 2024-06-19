@@ -38,8 +38,8 @@ uninstall() {
     fi
 
     # Remove sourcing from shell profile
-    sed -i '/source \/opt\/bash-lib\/bash-lib.sh/d' "$SHELL_PROFILE"
-    sed -i '/export BASH__PATH=\/opt\/bash-lib/d' "$SHELL_PROFILE"
+    sed -i '' '/source \/opt\/bash-lib\/bash-lib.sh/d' "$SHELL_PROFILE"
+    sed -i '' '/export BASH__PATH=\/opt\/bash-lib/d' "$SHELL_PROFILE"
 
     echo "bash-lib uninstalled successfully. Please restart your terminal or run 'source $SHELL_PROFILE' to apply changes."
 }
