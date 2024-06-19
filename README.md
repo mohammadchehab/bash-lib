@@ -18,7 +18,7 @@ A  Core library for bash Bourne
 To quickly set up the `bash-lib` library, run the following command:
 
 ```bash
-curl -sSL https://github.com/mohammadchehab/bash-lib/releases/latest/download/bash-lib.sh -o /tmp/bash-lib.sh && chmod +x /tmp/bash-lib.sh && source /tmp/bash-lib.sh
+curl -sSL https://raw.githubusercontent.com/mohammadchehab/bash-lib/main/dist/bash-lib.sh -o /tmp/bash-lib.sh && chmod +x /tmp/bash-lib.sh && source /tmp/bash-lib.sh
 ```
 
 
